@@ -19,7 +19,7 @@ interface ToDoDAO {
 
 //    追加
     @Insert
-    suspend fun created(todo: ToDo)
+    suspend fun create(todo: ToDo)
 
 //    更新
     @Update
