@@ -7,5 +7,36 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.mytodobeta.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_toDoDetailFragment"
+            app:destination="@id/toDoDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_mainFragment_to_createToDoFragment"
+            app:destination="@id/createToDoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createToDoFragment"
+        android:name="com.example.mytodobeta.page.create.CreateToDoFragment"
+        android:label="CreateToDoFragment" />
+    <fragment
+        android:id="@+id/toDoDetailFragment"
+        android:name="com.example.mytodobeta.page.detail.ToDoDetailFragment"
+        android:label="ToDoDetailFragment" >
+        <action
+            android:id="@+id/action_toDoDetailFragment_to_editToDoFragment"
+            app:destination="@id/editToDoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/editToDoFragment"
+        android:name="com.example.mytodobeta.page.edit.EditToDoFragment"
+        android:label="EditToDoFragment" />
 </navigation>
