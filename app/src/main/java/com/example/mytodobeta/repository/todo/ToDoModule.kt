@@ -42,7 +42,7 @@ object ToDoModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-// HiltはToDORepositoryなインスタンスを要求されたら、ToDoRepositoryImplを渡せば良いと判断してくれるようになる。
+// HiltはToDoRepositoryなインスタンスを要求されたら、ToDoRepositoryImplを渡せば良いと判断してくれるようになる。
 abstract class ToDoRepositoryModule {
     @Singleton
     @Binds

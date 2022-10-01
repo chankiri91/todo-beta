@@ -22,7 +22,7 @@ import javax.inject.Singleton
 // ToDoRepositoryImplでは、ToDoDAOを必要としています。
 class ToDoRepositoryImpl @Inject constructor(
     private val dao: ToDoDAO
-): ToDoRepository {
+) : ToDoRepository {
     override fun getAl(): Flow<List<ToDo>> {
         return dao.getAll()
     }
@@ -33,5 +33,19 @@ class ToDoRepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             dao.create(todo)
         }
+    }
+
+    override suspend fun update(todo: ToDo, title: String, detail: String): ToDo {
+        val updateToDo = ToDo(
+            _id = todo._id,
+            title = title,
+            detail = detail,
+            created = todo.created,
+            modified = System.currentTimeMillis()
+        )
+        withContext(Dispatchers.IO) {
+            dao.update(updateToDo)
+        }
+        return updateToDo
     }
 }
