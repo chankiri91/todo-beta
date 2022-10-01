@@ -1,5 +1,6 @@
 package com.example.mytodobeta.page.detail
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.mytodobeta.R
 import com.example.mytodobeta.databinding.TodoDetailFragmentBinding
 import com.example.mytodobeta.model.todo.ToDo
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +34,12 @@ class ToDoDetailFragment : Fragment(R.layout.todo_detail_fragment) {
             val todo = data.getParcelable("todo") as? ToDo ?: return@setFragmentResultListener
             vm.todo.value = todo
         }
+        setFragmentResultListener("confirm") { _, data ->
+            val which = data.getInt("result")
+            if (which == DialogInterface.BUTTON_POSITIVE) {
+                vm.delete()
+            }
+        }
         if (savedInstanceState == null) {
             vm.todo.value = args.todo
         }
@@ -45,10 +53,19 @@ class ToDoDetailFragment : Fragment(R.layout.todo_detail_fragment) {
             binding.titleText.text = todo.title
             binding.detailText.text = todo.detail
         }
-
-        val todo = args.todo
-        binding.titleText.text = todo.title
-        binding.detailText.text = todo.detail
+        vm.errorMessage.observe(viewLifecycleOwner) { msg ->
+            if (msg.isEmpty()) return@observe
+            Snackbar.make(requireView(), msg, Snackbar.LENGTH_SHORT).show()
+            // 画面回転するとエラーが再度表示されるのを防止
+            vm.errorMessage.value = ""
+        }
+        vm.deleted.observe(viewLifecycleOwner) { deleted ->
+            if (deleted) {
+                findNavController().popBackStack(
+                    R.id.mainFragment, false
+                )
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -70,6 +87,12 @@ class ToDoDetailFragment : Fragment(R.layout.todo_detail_fragment) {
                         todo
                     )
                 findNavController().navigate(action)
+                true
+            }
+            R.id.action_delete -> {
+                findNavController().navigate(
+                    R.id.action_toDoDetailFragment_to_confirmDialogFragment
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)

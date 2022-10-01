@@ -37,6 +37,9 @@
         <argument
             android:name="todo"
             app:argType="com.example.mytodobeta.model.todo.ToDo" />
+        <action
+            android:id="@+id/action_toDoDetailFragment_to_confirmDialogFragment"
+            app:destination="@id/confirmDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/editToDoFragment"
@@ -46,4 +49,8 @@
             android:name="todo"
             app:argType="com.example.mytodobeta.model.todo.ToDo" />
     </fragment>
+    <dialog
+        android:id="@+id/confirmDialogFragment"
+        android:name="com.example.mytodobeta.dialog.ConfirmDialogFragment"
+        android:label="ConfirmDialogFragment" />
 </navigation>
