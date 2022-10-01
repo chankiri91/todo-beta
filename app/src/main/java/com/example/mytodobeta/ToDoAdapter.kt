@@ -9,7 +9,9 @@ import com.example.mytodobeta.databinding.TodoItemBinding
 import com.example.mytodobeta.model.todo.ToDo
 
 // 1引数=リストで扱うデータを表す型、2引数＝ViewHolderの型
-class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.ViewHolder>(
+class ToDoAdapter(
+    private val listener: (ToDo) -> Unit
+) : ListAdapter<ToDo, ToDoAdapter.ViewHolder>(
     // 湯嘘の比較をするためのコールバックオブジェクト
     callbacks
 ) {
@@ -17,12 +19,20 @@ class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.ViewHolder>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = TodoItemBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+
+        val viewHolder = ViewHolder(binding)
+        binding.root.setOnClickListener {
+            val position = viewHolder.bindingAdapterPosition
+            val todo = getItem(position)
+            listener(todo)
+        }
+
+        return viewHolder
     }
 
     // ViewHolderとリスト中での場所が渡され、ビューに値をセット
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-val todo = getItem(position)
+        val todo = getItem(position)
         holder.bindTO(todo)
     }
 

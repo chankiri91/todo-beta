@@ -22,7 +22,10 @@ class MainFragment:Fragment(R.layout.main_fragment) {
         this._binding = MainFragmentBinding.bind(view)
 
         // recyclerViewにToDoAdapterそセット
-        val adapter = ToDoAdapter()
+        val adapter = ToDoAdapter(){
+            val action = MainFragmentDirections.actionMainFragmentToToDoDetailFragment(it)
+            findNavController().navigate(action)
+        }
         binding.recycler.adapter = adapter
 
         binding.fab.setOnClickListener {
