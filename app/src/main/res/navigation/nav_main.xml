@@ -41,5 +41,9 @@
     <fragment
         android:id="@+id/editToDoFragment"
         android:name="com.example.mytodobeta.page.edit.EditToDoFragment"
-        android:label="EditToDoFragment" />
+        android:label="EditToDoFragment" >
+        <argument
+            android:name="todo"
+            app:argType="com.example.mytodobeta.model.todo.ToDo" />
+    </fragment>
 </navigation>
